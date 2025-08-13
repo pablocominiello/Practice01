@@ -1,0 +1,54 @@
+name: Practice Deploy
+on: [push, workflow_dispatch]
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Get code
+              uses: actions/checkout@v3
+            - name: Install NodeJS
+              uses: actions/setup-node@v3
+              with:
+                node-version: 18
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run lint
+              run: npm lint
+            - name: Run log lint
+              run: echo "lint executed"
+
+    test:
+        needs: lint
+        runs-on: ubuntu-latest
+        steps:
+            - name: Get code
+              uses: actions/checkout@v3
+            - name: Install NodeJS
+              uses: actions/setup-node@v3
+              with:
+                node-version: 18
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run Test
+              run: npm test
+            - name: Run Test log
+              run: echo "test executed"
+
+    Deploy:
+        needs: test
+        runs-on: ubuntu-latest
+        steps:
+            - name: Get code
+              uses: actions/checkout@v3
+            - name: Install NodeJS
+              uses: actions/setup-node@v3
+              with:
+                node-version: 18
+            - name: Install dependencies
+              run: npm ci
+            - name: Build proyect
+              run: npm run build
+            - name: Deploy
+              run: echo "deploying"
