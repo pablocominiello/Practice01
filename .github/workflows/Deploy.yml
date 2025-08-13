@@ -12,14 +12,12 @@ jobs:
                 node-version: 18
             - name: Install dependencies
               run: npm ci
-
             - name: Run lint
               run: npm lint
             - name: Run log lint
               run: echo "lint executed"
 
     test:
-        needs: lint
         runs-on: ubuntu-latest
         steps:
             - name: Get code
@@ -30,7 +28,6 @@ jobs:
                 node-version: 18
             - name: Install dependencies
               run: npm ci
-
             - name: Run Test
               run: npm test
             - name: Run Test log
